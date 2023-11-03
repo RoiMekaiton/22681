@@ -22,7 +22,7 @@ public class FuckV2 extends LinearOpMode {
     DcMotor BackRight = hardwareMap.get(DcMotor.class, "BackR");
     DcMotor BackLeft = hardwareMap.get(DcMotor.class, "BackL");
     DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
-
+ // i shoot niggas for fun
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
