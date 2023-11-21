@@ -9,25 +9,31 @@ import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
 
 
-@TeleOp(name="FuckV2", group="Linear Opmode")
+@TeleOp(name="Fuck", group="Linear Opmode")
 // @Disabled
 public class FuckV2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor FrontLeft = hardwareMap.get(DcMotor.class, "FrontL"); // declaring the variables of the wheels
-    DcMotor FrontRight = hardwareMap.get(DcMotor.class, "FrontR");
-    DcMotor BackRight = hardwareMap.get(DcMotor.class, "BackR");
-    DcMotor BackLeft = hardwareMap.get(DcMotor.class, "BackL");
-    DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
 
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        DcMotor FrontLeft = hardwareMap.get(DcMotor.class, "FrontL"); // declaring the variables of the wheels
+        DcMotor FrontRight = hardwareMap.get(DcMotor.class, "FrontR");
+        DcMotor BackRight = hardwareMap.get(DcMotor.class, "BackR");
+        DcMotor BackLeft = hardwareMap.get(DcMotor.class, "BackL");
+        DcMotor LeftArm = hardwareMap.get(DcMotor.class, "armL");
+        DcMotor RightArm = hardwareMap.get(DcMotor.class, "armR");
+        DcMotor LeftElevator = hardwareMap.get(DcMotor.class, "elevatorL");
+        DcMotor RightElevator = hardwareMap.get(DcMotor.class, "elevatorR");
+
         FrontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the wheels that are wired backwards
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
+        RightArm.setDirection(DcMotor.Direction.REVERSE);
+        RightElevator.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
@@ -38,6 +44,8 @@ public class FuckV2 extends LinearOpMode {
             double y = - gamepad1.left_stick_y; // left stick y is responsible for the robots forward and backward movement
             double rot = gamepad1.right_stick_x; // right stick yx is responsible for the rotation of the robot
             double armPower = - gamepad2.left_stick_y;
+            double elevatorPower = - gamepad2.right_stick_y;
+
 
             double frontRightPower = y - x - rot;
             double frontLeftPower = y + x + rot;
@@ -60,8 +68,11 @@ public class FuckV2 extends LinearOpMode {
             BackRight.setPower(backRightPower);
             BackLeft.setPower(backLeftPower);
 
-            arm.setPower(armPower / 2);
+            LeftElevator.setPower(elevatorPower / 2);
+            RightElevator.setPower(elevatorPower / 2);
 
+            LeftArm.setPower(armPower);
+            RightArm.setPower(armPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
