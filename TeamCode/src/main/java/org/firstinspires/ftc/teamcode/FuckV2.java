@@ -25,14 +25,12 @@ public class FuckV2 extends LinearOpMode {
         DcMotor FrontRight = hardwareMap.get(DcMotor.class, "FrontR");
         DcMotor BackRight = hardwareMap.get(DcMotor.class, "BackR");
         DcMotor BackLeft = hardwareMap.get(DcMotor.class, "BackL");
-        DcMotor LeftArm = hardwareMap.get(DcMotor.class, "armL");
-        DcMotor RightArm = hardwareMap.get(DcMotor.class, "armR");
         DcMotor LeftElevator = hardwareMap.get(DcMotor.class, "elevatorL");
         DcMotor RightElevator = hardwareMap.get(DcMotor.class, "elevatorR");
+        DcMotor claw = hardwareMap.get(DcMotor.class, "claw");
 
         FrontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the wheels that are wired backwards
         BackLeft.setDirection(DcMotor.Direction.REVERSE);
-        RightArm.setDirection(DcMotor.Direction.REVERSE);
         RightElevator.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
@@ -43,7 +41,6 @@ public class FuckV2 extends LinearOpMode {
             double x = gamepad1.left_stick_x; // left stick x is responsible for the robots horizontal movement
             double y = - gamepad1.left_stick_y; // left stick y is responsible for the robots forward and backward movement
             double rot = gamepad1.right_stick_x; // right stick yx is responsible for the rotation of the robot
-            double armPower = - gamepad2.left_stick_y;
             double elevatorPower = - gamepad2.right_stick_y;
 
 
@@ -71,8 +68,16 @@ public class FuckV2 extends LinearOpMode {
             LeftElevator.setPower(elevatorPower / 2);
             RightElevator.setPower(elevatorPower / 2);
 
-            LeftArm.setPower(armPower);
-            RightArm.setPower(armPower);
+            if (gamepad2.right_bumper) // this code is made to open and close the claw.
+            {
+                claw.setPower(0.5);
+            }
+            if (gamepad2.left_bumper)
+            {
+                claw.setPower(-0.5);
+            }
+
+
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
