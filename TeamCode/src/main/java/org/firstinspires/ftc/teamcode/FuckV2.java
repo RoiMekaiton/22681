@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 // import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
@@ -29,17 +30,17 @@ public class FuckV2 extends LinearOpMode {
         DcMotor rightElevator = hardwareMap.get(DcMotor.class, "elevatorR");
         DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
 
-        FrontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the wheels that are wired backwards
-        BackLeft.setDirection(DcMotor.Direction.REVERSE);
-        RightElevator.setDirection(DcMotor.Direction.REVERSE); 
+        frontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the wheels that are wired backwards
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        rightElevator.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
 
         while (opModeIsActive()) {
 
-            Telemetry.addData("Left elevator Ticks:", leftElevator.getCurrentPosition()); // we want these to track the
-            Telemetry.addData("Right elevator Ticks:", rightElevator.getCurrentPosition()); // elevators position.
+            telemetry.addData("Left elevator Ticks:", leftElevator.getCurrentPosition()); // we want these to track the
+            telemetry.addData("Right elevator Ticks:", rightElevator.getCurrentPosition()); // elevators position.
             
             double x = gamepad1.left_stick_x; // left stick x is responsible for the robots horizontal movement
             double y = - gamepad1.left_stick_y; // left stick y is responsible for the robots forward and backward movement
@@ -64,25 +65,25 @@ public class FuckV2 extends LinearOpMode {
                 backLeftPower /= norm;
             } // assuming there is a value larger than 10 reducing all of the values for equal proportions
 
-            FrontLeft.setPower(frontLeftPower);
-            FrontRight.setPower(frontRightPower);
-            BackRight.setPower(backRightPower);
-            BackLeft.setPower(backLeftPower);
+            frontLeft.setPower(frontLeftPower);
+            frontRight.setPower(frontRightPower);
+            backRight.setPower(backRightPower);
+            backLeft.setPower(backLeftPower);
 
-            LeftElevator.setPower(elevatorPower / 2);
-            RightElevator.setPower(elevatorPower / 2);
+            leftElevator.setPower(elevatorPower / 2);
+            rightElevator.setPower(elevatorPower / 2);
 
             if (gamepad2.a)
             {
                 rightElevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftElevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                leftElevator.setTargetPostion(0); rightElevator.setTargetPostion(0); // 0 is a placeholder
+                leftElevator.setTargetPosition(0); rightElevator.setTargetPosition(0); // 0 is a placeholder
                 leftElevator.setPower(0.5); rightElevator.setPower(0.5);
                 leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                leftElevator.setTargetPostion(0); rightElevator.setTargetPostion(0); // 0 is a placeholder
+                leftElevator.setTargetPosition(0); rightElevator.setTargetPosition(0); // 0 is a placeholder
                 leftElevator.setPower(0.1); rightElevator.setPower(0.1);
                 leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
