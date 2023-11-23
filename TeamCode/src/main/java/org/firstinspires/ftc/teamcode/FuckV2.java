@@ -28,19 +28,25 @@ public class FuckV2 extends LinearOpMode {
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "BackL");
         DcMotor leftElevator = hardwareMap.get(DcMotor.class, "elevatorL");
         DcMotor rightElevator = hardwareMap.get(DcMotor.class, "elevatorR");
-        DcMotor arm = hardwareMap.get(DcMotor.class, "arm");
+        DcMotor leftArm = hardwareMap.get(DcMotor.class, "armL");
+        DcMotor rightArm = hardwareMap.get(DcMotor.class, "armR");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the wheels that are wired backwards
+        frontLeft.setDirection(DcMotor.Direction.REVERSE); // reversing the engines that spin to the wrong side.
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         rightElevator.setDirection(DcMotor.Direction.REVERSE);
+        rightArm.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
 
         while (opModeIsActive()) {
 
-            telemetry.addData("Left elevator Ticks:", leftElevator.getCurrentPosition()); // we want these to track the
-            telemetry.addData("Right elevator Ticks:", rightElevator.getCurrentPosition()); // elevators position.
+            telemetry.addData("Left elevator Ticks:", leftElevator.getCurrentPosition()); // returns to the driver hub
+            telemetry.addData("Right elevator Ticks:", rightElevator.getCurrentPosition()); // the elevators tick position
+            telemetry.addData("Front left direction:", frontLeft.getDirection());
+            telemetry.addData("Front right direction:", frontRight.getDirection());
+            telemetry.addData("Back left direction:", backLeft.getDirection());
+            telemetry.addData("Back right direction:", backLeft.getDirection());
             
             double x = gamepad1.left_stick_x; // left stick x is responsible for the robots horizontal movement
             double y = - gamepad1.left_stick_y; // left stick y is responsible for the robots forward and backward movement
@@ -88,11 +94,12 @@ public class FuckV2 extends LinearOpMode {
                 leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-                // leftElevator.setMode();
-                // rightElevator.setMode(); need to put in the command that gives the motor back controller access
+                leftElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                rightElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
             
-            arm.setPower(armPower);
+            rightArm.setPower(armPower);
+            leftArm.setPower(armPower);
             
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
