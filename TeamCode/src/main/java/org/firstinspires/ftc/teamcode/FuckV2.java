@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+// example
 // import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import java.lang.Math;
 
 
-@TeleOp(name="Fuck", group="Linear Opmode")
+@TeleOp(name="FuckV2", group="Linear Opmode")
 // @Disabled
 public class FuckV2 extends LinearOpMode {
 
