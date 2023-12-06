@@ -43,6 +43,13 @@ public class FuckV3 extends OpMode
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         leftElevator.setDirection(DcMotor.Direction.REVERSE);
         leftArm.setDirection(DcMotor.Direction.REVERSE);
+        leftClaw.setDirection(DcMotor.Direction.REVERSE);
+
+        leftElevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightElevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        leftElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         runtime.reset();
     }
@@ -89,25 +96,30 @@ public class FuckV3 extends OpMode
         if(gamepad2.a) // elevator encoder code
         {
             elevatorReturn();
-            leftElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            rightElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         }
 
         rightArm.setPower(armPower/2);
         leftArm.setPower(armPower/2);
 
-        while(gamepad2.x)//claw close
+
+        if(gamepad2.right_bumper)//claw open
         {
+            telemetry.addData("SERVO: ","X IS BEING PRESSED");
             leftClaw.setPower(0.2);
             rightClaw.setPower(0.2);
         }
-        while(gamepad2.y)//claw open
+        else if(gamepad2.left_bumper)//claw close
         {
-            leftClaw.setPower(0.2);
-            rightClaw.setPower(0.2);
+
+            telemetry.addData("SERVO: ","Y IS BEING PRESSED");
+            leftClaw.setPower(-0.2);
+            rightClaw.setPower(-0.2);
         }
-        leftClaw.setPower(0);
-        rightClaw.setPower(0);
+        else
+        {
+            leftClaw.setPower(0);
+            rightClaw.setPower(0);
+        }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
@@ -117,14 +129,28 @@ public class FuckV3 extends OpMode
         rightElevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftElevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        leftElevator.setTargetPosition(35); rightElevator.setTargetPosition(35); // 0 is a placeholder
-        leftElevator.setPower(0.3); rightElevator.setPower(0.3);
-        leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if (rightElevator.getCurrentPosition() > 40 && leftElevator.getCurrentPosition() > 40) {
+            leftElevator.setTargetPosition(40);
+            rightElevator.setTargetPosition(40);
+            leftElevator.setPower(0.5);
+            rightElevator.setPower(0.5);
+            leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        else if (rightElevator.getCurrentPosition() <= 40 && leftElevator.getCurrentPosition() <= 40)
+        {
+            leftElevator.setTargetPosition(0);
+            rightElevator.setTargetPosition(0);
+            leftElevator.setPower(0.2);
+            rightElevator.setPower(0.2);
+            leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
 
-        leftElevator.setTargetPosition(1); rightElevator.setTargetPosition(1); // 0 is a placeholder
-        leftElevator.setPower(0.1); rightElevator.setPower(0.1);
-        leftElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightElevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        else if (rightElevator.getCurrentPosition() == 0)
+        {
+            rightElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            leftElevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
     }
 }
