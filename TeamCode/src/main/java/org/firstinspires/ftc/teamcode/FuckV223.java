@@ -55,24 +55,30 @@ public class FuckV223 extends LinearOpMode {
         runtime.reset();
         waitForStart();
 
-        moveForw(1, 5000);
+//        main thread
+          move(0.5, 2500);
+          rotateRight(0.5, 500);
+          move(0.5, 1000);
+          moveArm(0.05, 500);
 
-        moveBack(2, 5000);
+//        move(0.5, 1000);
+//        move(-0.5, 1000);
+//
+//        moveLeftClaw(0.5, 1000);
+//        moveLeftClaw(-0.5, 1000);
+//
+//        moveRightClaw(0.5, 1000);
+//        moveRightClaw(-0.5, 1000);
+
+//        moveElevator(0.5, 500);
+//        moveElevator(-0.5, 500);
+
+//        rotateLeft(0.5, 500); // in order to rotate 90 deg use time 500 for a full turn use time 1000
+//        rotateRight(0.5, 500);
       }
-    public void moveForw (int power, int time) {
+    public void move (double power, int time) {
         frontLeft.setPower(power);
         frontRight.setPower(power);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-        sleep(time);
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-      }
-    public void moveBack (int power, int time) {
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
         backLeft.setPower(power);
         backRight.setPower(power);
         sleep(time);
@@ -80,5 +86,51 @@ public class FuckV223 extends LinearOpMode {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+      }
+    public void moveRightClaw (double power, int time) {
+        rightClaw.setPower(power);
+        sleep(time);
+        rightClaw.setPower(0);
+    }
+    public void moveLeftClaw (double power, int time) {
+        leftClaw.setPower(power);
+        sleep(time);
+        leftClaw.setPower(0);
+    }
+    public void moveElevator (double power, int time) {
+        leftElevator.setPower(power);
+        rightElevator.setPower(power);
+        sleep(time);
+        leftElevator.setPower(0);
+        rightElevator.setPower(0);
+    }
+    public void rotateLeft (double power, int time) {
+        backLeft.setPower(-power);
+        frontLeft.setPower(-power);
+        backRight.setPower(power);
+        frontRight.setPower(power);
+        sleep(time);
+        backLeft.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        frontRight.setPower(0);
+    }
+    public void rotateRight (double power, int time) {
+        backLeft.setPower(power);
+        frontLeft.setPower(power);
+        backRight.setPower(-power);
+        frontRight.setPower(-power);
+        sleep(time);
+        backLeft.setPower(0);
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        frontRight.setPower(0);
+    }
+    public void moveArm (double power, int time) {
+        rightArm.setPower(power);
+        leftArm.setPower(power);
+        sleep(time);
+        leftArm.setPower(0);
+        rightArm.setPower(0);
     }
 }
