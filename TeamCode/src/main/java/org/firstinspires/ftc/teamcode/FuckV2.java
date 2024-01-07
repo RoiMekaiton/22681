@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
 
-
 @TeleOp(name="FuckV2", group="Linear Opmode")
 // @Disabled
 public class FuckV2 extends LinearOpMode {
