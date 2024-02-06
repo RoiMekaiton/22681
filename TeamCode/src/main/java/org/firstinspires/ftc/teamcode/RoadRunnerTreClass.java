@@ -1,14 +1,14 @@
 package main.java.org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.teamcode.commands.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
 @Autonomous(name= "Road Runner Test")
 public class RoadRunnerTreClass extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        SampleMecanumDrive driveTrain = new SampleMecanumDrive(hardwareMap);
+        SampleTankDrive driveTrain = new SampleTankDrive(hardwareMap);
         RoadRunnerTrejC rrTrajectories = new RoadRunnerTrejC(driveTrain);
 
         waitForStart();

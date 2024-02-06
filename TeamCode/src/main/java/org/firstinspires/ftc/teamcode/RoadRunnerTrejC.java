@@ -5,12 +5,12 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import org.firstinspires.ftc.teamcode.commands.TrajectoryFollowerCommand;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.SampleTankDrive;
 
 public class RoadRunnerTrejC {
-    SampleMecanumDrive driveTrain;
+    SampleTankDrive driveTrain;
 
-    public RoadRunnerTrejC (SampleMecanumDrive dT) {driveTrain = dT; }
+    public RoadRunnerTrejC (SampleTankDrive dT) {driveTrain = dT; }
 
     public Trajectory forwardsByInches (double x, double y, double heading, double inches) {
         Trajectory forwards = driveTrain.trajectoryBuilder(new Pose2d (x, y, heading))
