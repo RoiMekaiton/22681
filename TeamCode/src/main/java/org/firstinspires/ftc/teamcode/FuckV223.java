@@ -56,7 +56,7 @@ public class FuckV223 extends LinearOpMode {
         waitForStart();
 
 //        main thread
-          mainmove()
+          mainmove(1, 1);
 
 //        move(0.5, 1000);
 //        move(-0.5, 1000);
@@ -130,7 +130,7 @@ public class FuckV223 extends LinearOpMode {
         leftArm.setPower(0);
         rightArm.setPower(0);
     }
-    public void mainmove () {
+    public void mainmove (int time, int power) {
           move(0.5, 2500);
           rotateRight(0.5, 500);
           move(0.5, 1000);
