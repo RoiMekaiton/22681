@@ -3,8 +3,8 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -25,8 +25,10 @@ public class FuckV3 extends OpMode
     DcMotor elevatorR;
     DcMotor armL;
     DcMotor armR;
-    //CRServo leftClaw;
-    //CRServo rightClaw;
+    Servo clawArmL;
+    Servo clawArmR;
+    Servo clawL;
+    Servo clawR;
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
@@ -39,8 +41,10 @@ public class FuckV3 extends OpMode
         elevatorR = hardwareMap.get(DcMotor.class, "elevatorR");
         armL = hardwareMap.get(DcMotor.class, "armL");
         armR = hardwareMap.get(DcMotor.class, "armR");
-        //leftClaw = hardwareMap.get(CRServo.class, "clawL");
-        //rightClaw = hardwareMap.get(CRServo.class, "clawR");
+        clawArmL = hardwareMap.get(Servo.class, "clawArmL");
+        clawArmR = hardwareMap.get(Servo.class, "clawArmR");
+        clawL = hardwareMap.get(Servo.class, "clawL");
+        clawR = hardwareMap.get(Servo.class, "clawR");
 
         frontL.setDirection(DcMotor.Direction.REVERSE); // reversing the engines that spin to the wrong side.
         elevatorL.setDirection(DcMotor.Direction.REVERSE);
@@ -97,25 +101,16 @@ public class FuckV3 extends OpMode
         armR.setPower(armPower/2);
         armL.setPower(armPower/2);
 
-        // incorrect claw code
-        /*if(gamepad2.right_bumper)//claw open
+        if (gamepad2.x)
         {
-            telemetry.addData("SERVO: ","X IS BEING PRESSED");
-            leftClaw.setPower(0.2);
-            rightClaw.setPower(0.2);
+            clawL.setPosition(0.6);
+            clawR.setPosition(0.4);
         }
-        else if(gamepad2.left_bumper)//claw close
+        else if (gamepad2.y)
         {
-
-            telemetry.addData("SERVO: ","Y IS BEING PRESSED");
-            leftClaw.setPower(-0.2);
-            rightClaw.setPower(-0.2);
+            clawL.setPosition(0.45);
+            clawR.setPosition(0.55);
         }
-        else
-        {
-            leftClaw.setPower(0);
-            rightClaw.setPower(0);
-        }*/
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
