@@ -429,14 +429,6 @@ public class FtcRobotControllerActivity extends Activity
   protected void onStart() {
     super.onStart();
     RobotLog.vv(TAG, "onStart()");
-
-    entireScreenLayout.setOnTouchListener(new View.OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        dimmer.handleDimTimer();
-        return false;
-      }
-    });
   }
 
   @Override

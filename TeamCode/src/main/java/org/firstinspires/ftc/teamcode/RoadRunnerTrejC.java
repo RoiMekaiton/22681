@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
  * NOTE: this has been refactored to use FTCLib's command-based
  */
 @Config
-@Autonomous(group = "drive")
+@Autonomous(name = "RoadRunner", group = "drive")
 public class RoadRunnerTrejC extends CommandOpMode {
 
     public static double DISTANCE = 60; // in
