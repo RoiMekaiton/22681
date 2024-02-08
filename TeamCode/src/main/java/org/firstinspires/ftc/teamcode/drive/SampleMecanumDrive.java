@@ -37,14 +37,18 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
-
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.firstinspires.ftc.robotcore.external.navigation.Orientation.getOrientation;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ACCEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_ACCEL;
 import static org.firstinspires.ftc.teamcode.drive.DriveConstants.MAX_ANG_VEL;
@@ -132,11 +136,9 @@ public class SampleMecanumDrive extends MecanumDrive {
         for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
-
         // TODO: adjust the names of the following hardware devices to match your configuration
         imu = hardwareMap.get(BHI260IMU.class, "imu");
         BHI260IMU.Parameters parameters = new BHI260IMU.Parameters((ImuOrientationOnRobot) hardwareMap);
-        parameters.imuOrientationOnRobot = BHI260IMU.Parameters.Radians;
         imu.initialize(parameters);
 
         // TODO: if your hub is mounted vertically, remap the IMU axes so that the z-axis points
@@ -395,6 +397,9 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public double getRawExternalHeading() {
-        return imu.getAngularOrientation().firstAngle;
+        YawPitchRollAngles robotOrientation;
+        robotOrientation = imu.getRobotYawPitchRollAngles();
+        double Yaw   = robotOrientation.getYaw(AngleUnit.DEGREES);
+        return Yaw;
     }
 }
