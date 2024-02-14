@@ -48,9 +48,8 @@ public class FuckV3 extends OpMode
 
         frontL.setDirection(DcMotor.Direction.REVERSE); // reversing the engines that spin to the wrong side.
         elevatorL.setDirection(DcMotor.Direction.REVERSE);
-        armR.setDirection(DcMotor.Direction.REVERSE);
-        //leftClaw.setDirection(DcMotor.Direction.REVERSE);
 
+        armR.
 
         runtime.reset();
     }
@@ -98,8 +97,8 @@ public class FuckV3 extends OpMode
         elevatorR.setPower(elevatorPower / 2);
 
 
-        armR.setPower(armPower/2);
-        armL.setPower(armPower/2);
+        armR.setPower(armPower);
+        armL.setPower(armPower);
 
         if (gamepad2.x)
         {
@@ -114,13 +113,13 @@ public class FuckV3 extends OpMode
 
         if (gamepad2.left_bumper)
         {
-            clawArmL.setPosition(0.6);
-            clawArmR.setPosition(0.4);
+            clawArmL.setPosition(0.75);
+            clawArmR.setPosition(0.25);
         }
         else if (gamepad2.right_bumper)
         {
-            clawArmL.setPosition(0.4);
-            clawArmR.setPosition(0.6);
+            clawArmL.setPosition(0.25);
+            clawArmR.setPosition(0.75);
         }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
