@@ -108,8 +108,19 @@ public class FuckV3 extends OpMode
         }
         else if (gamepad2.y)
         {
-            clawL.setPosition(0.45);
-            clawR.setPosition(0.55);
+            clawL.setPosition(0.4);
+            clawR.setPosition(0.6);
+        }
+
+        if (gamepad2.left_bumper)
+        {
+            clawArmL.setPosition(0.6);
+            clawArmR.setPosition(0.4);
+        }
+        else if (gamepad2.right_bumper)
+        {
+            clawArmL.setPosition(0.4);
+            clawArmR.setPosition(0.6);
         }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());

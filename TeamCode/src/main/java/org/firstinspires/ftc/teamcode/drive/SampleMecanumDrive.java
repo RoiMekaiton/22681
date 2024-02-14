@@ -139,7 +139,8 @@ public class SampleMecanumDrive extends MecanumDrive {
         // TODO: adjust the names of the following hardware devices to match your configuration
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                DriveConstants.LOGO_FACING_DIR, DriveConstants.USB_FACING_DIR));
+                RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
 
         // TODO: if your hub is mounted vertically, remap the IMU axes so that the z-axis points
@@ -148,8 +149,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         leftFront = hardwareMap.get(DcMotorEx.class, "frontL");
         leftRear = hardwareMap.get(DcMotorEx.class, "backL");
-        rightRear = hardwareMap.get(DcMotorEx.class, "frontR");
-        rightFront = hardwareMap.get(DcMotorEx.class, "backR");
+        rightRear = hardwareMap.get(DcMotorEx.class, "backR");
+        rightFront = hardwareMap.get(DcMotorEx.class, "frontR");
 
         motors = Arrays.asList(leftFront, leftRear, rightRear, rightFront);
 
@@ -168,8 +169,6 @@ public class SampleMecanumDrive extends MecanumDrive {
         if (RUN_USING_ENCODER && MOTOR_VELO_PID != null) {
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
-
-        // TODO: reverse any motors using DcMotor.setDirection()
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));
