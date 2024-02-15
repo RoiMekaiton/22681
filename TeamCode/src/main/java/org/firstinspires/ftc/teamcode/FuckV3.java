@@ -49,7 +49,6 @@ public class FuckV3 extends OpMode
         frontL.setDirection(DcMotor.Direction.REVERSE); // reversing the engines that spin to the wrong side.
         elevatorL.setDirection(DcMotor.Direction.REVERSE);
 
-        armR.
 
         runtime.reset();
     }
