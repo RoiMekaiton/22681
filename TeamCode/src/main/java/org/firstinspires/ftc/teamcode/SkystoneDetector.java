@@ -22,12 +22,9 @@ public class SkystoneDetector extends OpenCvPipeline {
     private int width; // width of the image
     SkystoneLocation location;
 
-    /**
-     *
-     * @param width The width of the image (check your camera)
-     */
+
     public SkystoneDetector(int width) {
-        this.width = width;
+        this.width = 320;
     }
 
     @Override

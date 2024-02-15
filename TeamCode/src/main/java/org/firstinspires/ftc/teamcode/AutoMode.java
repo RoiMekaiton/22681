@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -16,23 +17,25 @@ public class AutoMode extends LinearOpMode {
     int height = 240;
     // store as variable here so we can access the location
     SkystoneDetector detector = new SkystoneDetector(width);
-    OpenCvCamera phoneCam;
+    OpenCvCamera webcam1;
 
     @Override
     public void runOpMode() {
         // robot logic...
-
+        WebcamName webcameName = hardwareMap.get(WebcamName.class, "webcame1");
         // https://github.com/OpenFTC/EasyOpenCV/blob/master/examples/src/main/java/org/openftc/easyopencv/examples/InternalCameraExample.java
         // Initialize the back-facing camera
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        webcam1 = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         // Connect to the camera
-        phoneCam.openCameraDevice();
+//        webcam1.openCameraDevice();
+        webcam1 = OpenCvCameraFactory.getInstance().createWebcam(webcameName, cameraMonitorViewId);
+
         // Use the SkystoneDetector pipeline
         // processFrame() will be called to process the frame
-        phoneCam.setPipeline(detector);
+        webcam1.setPipeline(detector);
         // Remember to change the camera rotation
-        phoneCam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        webcam1.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
         //...
 
