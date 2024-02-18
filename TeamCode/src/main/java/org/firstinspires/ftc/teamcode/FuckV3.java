@@ -29,6 +29,9 @@ public class FuckV3 extends OpMode
     Servo clawArmR;
     Servo clawL;
     Servo clawR;
+
+    double ticks = 537.7;
+    double newTarget = 0;
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
@@ -49,6 +52,10 @@ public class FuckV3 extends OpMode
         frontL.setDirection(DcMotor.Direction.REVERSE); // reversing the engines that spin to the wrong side.
         elevatorL.setDirection(DcMotor.Direction.REVERSE);
 
+        //armR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //armL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //armR.setDirection(DcMotor.Direction.REVERSE);
 
         runtime.reset();
     }
@@ -58,6 +65,9 @@ public class FuckV3 extends OpMode
         //telemetry.addData("Right elevator Ticks:", elevatorR.getCurrentPosition()); // the elevators tick position
         //telemetry.addData("Left elevator Ticks:", elevatorL.getPower()); // returns to the driver hub
         //telemetry.addData("Right elevator Ticks:", elevatorR.getPower()); // the elevators tick position
+
+        telemetry.addData("left arm Ticks:", armL.getCurrentPosition());
+        telemetry.addData("right arm Ticks:", armR.getCurrentPosition());
 
         double x = gamepad1.right_stick_x; // left stick x is responsible for the robots horizontal movement
         double y = - gamepad1.right_stick_y; // left stick y is responsible for the robots forward and backward movement
@@ -95,9 +105,13 @@ public class FuckV3 extends OpMode
         elevatorL.setPower(elevatorPower / 2);
         elevatorR.setPower(elevatorPower / 2);
 
-
-        armR.setPower(armPower);
         armL.setPower(armPower);
+        armR.setPower(armPower);
+
+        if (gamepad1.right_bumper)
+        {
+            encoder(2);
+        }
 
         if (gamepad2.x)
         {
@@ -124,36 +138,15 @@ public class FuckV3 extends OpMode
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
     }
-    public void elevatorReturn()
+
+    public void encoder(double turnage)
     {
-
-        if (elevatorR.getCurrentPosition() > 20 && elevatorL.getCurrentPosition() > 20
-            && elevatorR.getPower() == 0 && elevatorL.getPower() == 0)
-        {
-            moveEncoders(elevatorL, 20, 0.5);
-            moveEncoders(elevatorR, 20, 0.5);
-        }
-
-        else if (elevatorR.getCurrentPosition() <= 30 && elevatorL.getCurrentPosition() <= 30
-                && elevatorR.getCurrentPosition() > 5 && elevatorL.getCurrentPosition() > 5
-                && elevatorR.getPower() == 0 && elevatorL.getPower() == 0)
-        {
-            moveEncoders(elevatorL, 0, 0.2);
-            moveEncoders(elevatorR, 0, 0.2);
-        }
-
-        else if (elevatorR.getCurrentPosition() < 5 && elevatorL.getCurrentPosition() < 5
-                && elevatorR.getPower() == 0 && elevatorL.getPower() == 0)
-        {
-            elevatorR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            elevatorL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        }
-    }
-    public void moveEncoders(DcMotor motor, int place, double power)
-    {
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        motor.setTargetPosition(place);
-        motor.setPower(power);
-        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        newTarget = ticks/turnage;
+        armR.setTargetPosition((int)newTarget);
+        armL.setTargetPosition((int)newTarget);
+        armR.setPower(0.6);
+        armL.setPower(0.6);
+        armR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armL.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 }

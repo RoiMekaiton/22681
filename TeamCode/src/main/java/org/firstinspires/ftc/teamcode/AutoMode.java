@@ -8,9 +8,10 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.openftc.easyopencv.OpenCvPipeline;
 
 @Autonomous(name="Auto: SkyStone Detector", group="Autonomous")
-public class AutoMode extends LinearOpMode {
+public class AutoMode extends LinearOpMode{
     // Handle hardware stuff...
 
     int width = 320;
@@ -18,6 +19,7 @@ public class AutoMode extends LinearOpMode {
     // store as variable here so we can access the location
     SkystoneDetector detector = new SkystoneDetector(width);
     OpenCvCamera webcam1;
+
 
     @Override
     public void runOpMode() {
@@ -28,7 +30,8 @@ public class AutoMode extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam1 = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
         // Connect to the camera
-//        webcam1.openCameraDevice();
+
+        webcam1.openCameraDevice();
         webcam1 = OpenCvCameraFactory.getInstance().createWebcam(webcameName, cameraMonitorViewId);
 
         // Use the SkystoneDetector pipeline
